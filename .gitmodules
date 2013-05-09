@@ -1,0 +1,3 @@
+[submodule "scripts/components/loader"]
+	path = scripts/components/loader
+	url = git://github.com/chris-saunders/loader.git
