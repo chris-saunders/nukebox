@@ -24,13 +24,13 @@ define(["models/search"], function(Search) {
 
       beforeEach(function() {
         var collection = new Backbone.Collection();
-        collection.add([{ needle: "foo" }, { needle: "bar" }, { needle: "bar" }]);
+        collection.add([{ artist: "foo" }, { artist: "bar" }, { artist: "bar" }]);
         this.model.set({ haystack: collection });
       });
       
       it("can search a model for a term", function() {
         this.model.set({ needle: "bar" });
-        expect(this.model.get('result')[0].get('needle'))
+        expect(this.model.get('result')[0].get('artist'))
           .toBe('bar');
       });
 

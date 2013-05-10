@@ -15,7 +15,6 @@ define([
 			var self = this;
 			this.on('change:needle', function() {
 				self.set({ result: self.get('haystack').where({ artist: self.get('needle') }) });
-				console.log('self', self)
 			});
 		},
 

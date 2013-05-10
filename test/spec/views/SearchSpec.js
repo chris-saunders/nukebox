@@ -1,30 +1,37 @@
-define([ 
+define([
   "views/SearchView"
 ], function(SearchView) {
 
   describe("View - Search", function() {
 
+    var collection,
+        view;
+
     beforeEach(function() {
-      var collection = new Backbone.Collection();
-      this.model = new Backbone.Model();
-      collection.add([{ name: "foo" }, { name: "bar" }, { name: "bar" }]);
-      this.model.set({ haystack: collection });
-      this.view = new SearchView({ model: this.model });
+      collection = new Backbone.Collection();
+      collection.add([{ artist: "foo" }, { artist: "bar" }, { artist: "bar" }]);
+      view = new SearchView({ haystack: collection });
+    });
+
+    afterEach(function() {
+      collection = null;
+      view = null;
     });
 
     it("can render the template", function() {
-      expect(this.view.render()).toEqual(this.view);
+      expect(view.render()).toEqual(view);
     });
 
     it("will search given haystack for term on user interaction", function() {
-      var modelChange = jasmine.createSpy('- change event callback -');
-      this.model.on('change', modelChange);
-
-      this.view.render();
       var keyup = $.Event('keyup');
       keyup.which = 70;
-      this.view.$('input[type=text]').trigger(keyup);
-      expect(modelChange).toHaveBeenCalled();
+
+      spyOn(view.model, 'set');
+
+      view.render();
+      view.$('.needle').trigger(keyup);
+
+      expect(view.model.set).toHaveBeenCalled();
     });
 
   });
