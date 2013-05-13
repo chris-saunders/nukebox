@@ -1,6 +1,7 @@
 define([
-  "views/SearchView"
-], function(SearchView) {
+  "views/SearchView",
+  "components/table/scripts/views/TableView"
+], function(SearchView, CompTableView) {
 
   describe("View - Search", function() {
 
@@ -20,6 +21,9 @@ define([
 
     it("can render the template", function() {
       expect(view.render()).toEqual(view);
+    });
+
+    it("can render table component", function() {
     });
 
     it("will search given haystack for term on user interaction", function() {

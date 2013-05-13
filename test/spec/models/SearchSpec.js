@@ -1,4 +1,6 @@
-define(["models/search"], function(Search) {
+define([
+  "models/search"
+], function(Search) {
 
   describe("Model - Search", function() {
 

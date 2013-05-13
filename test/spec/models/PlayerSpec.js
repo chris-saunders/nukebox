@@ -1,4 +1,8 @@
-define(["models/player", "models/song", "collections/songs"], function(Player, Song, Songs) {
+define([
+  "models/player", 
+  "models/song", 
+  "collections/songs"
+], function(Player, Song, Songs) {
 
   describe("Model - Player", function() {
 

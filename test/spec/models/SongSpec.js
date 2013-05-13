@@ -1,4 +1,6 @@
-define(["models/song"], function(Song) {
+define([
+  "models/song"
+], function(Song) {
 
   describe("Model - Song", function() {
 

@@ -1,3 +1,6 @@
 [submodule "scripts/components/loader"]
 	path = scripts/components/loader
-	url = git://github.com/chris-saunders/loader.git
+	url = git@github.com:chris-saunders/loader.git
+[submodule "scripts/components/table"]
+	path = scripts/components/table
+	url = git@github.com:chris-saunders/table.git
