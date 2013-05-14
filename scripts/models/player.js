@@ -1,15 +1,13 @@
 define([
 	'jquery',
 	'lodash',
-	'backbone'
-], function($, _, Backbone) {
+	'backbone',
+	'models/song'
+], function($, _, Backbone, Song) {
 	return Backbone.Model.extend({
 
 		defaults: {
-			"artist": "Artist",
-			"album": "Album",
-			"track": "Track",
-			"url": ""
+			currentSong: new Song
 		},
 		
 		initialize: function() {
@@ -19,6 +17,10 @@ define([
 			if (attrs.hasOwnProperty('url') && !attrs.songs.findWhere({ url: attrs.url })) {
 				return "No song exists with that URL.";
 			}
+		},
+
+		loadSong: function(song) {
+			this.set({ currentSong: song }, { validate: true });
 		}
 	});
 });

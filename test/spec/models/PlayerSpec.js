@@ -1,61 +1,63 @@
 define([
   "models/player", 
-  "models/song", 
-  "collections/songs"
-], function(Player, Song, Songs) {
+  "models/song"
+], function(Player, Song) {
 
-  describe("Model - Player", function() {
+  describe("Model_Player", function() {
 
-    var player,
+    var model,
         song;
 
     beforeEach(function() {
-      player = new Player();
-      song = new Song({ artist: "TestArtist", album: "TestAlbum", track: "TestTrack", url: "TestUrl" });
+      model = new Player();
+      song = new Song({ 
+        artist: "TestArtist", 
+        album: "TestAlbum", 
+        track: "TestTrack", 
+        url: "TestUrl" 
+      });
     });
 
     afterEach(function() {
       player = song = null;
     });
 
-
-    it("Will load a player with no values set", function() {
-      expect(player.get('artist')).toBe('Artist');
-      expect(player.get('album')).toBe('Album');
-      expect(player.get('track')).toBe('Track');
-      expect(player.get('url')).toBe('');
+    it("is defined", function() {
+      expect(model).not.toBeUndefined();
     });
 
-    it("Can load a song into the player", function() {
-      player.set(song.toJSON());
-
-      expect(player.get('artist')).toBe('TestArtist');
-      expect(player.get('album')).toBe('TestAlbum');
-      expect(player.get('track')).toBe('TestTrack');
-      expect(player.get('url')).toBe('TestUrl');
+    // Duck-typing, although I have my reservations
+    it("looks like a BB model", function() {
+      expect( _.isFunction(model.get) ).toBe(true);
+      expect( _.isFunction(model.set) ).toBe(true);
     });
 
-    it("Fires a custom event when the song is replaced", function() {
-      var spy = jasmine.createSpy('-change event callback-');
-      player.on('change', spy);
-      player.set(song.toJSON());
+    it("can add a song model (that is a BB model) via helper method", function() {
+      model.loadSong(song);
+      expect(model.get('currentSong')).toEqual(song);
+      expect( _.isFunction(model.get('currentSong').isValid) ).toBe(true);
+    });
+
+    it("fires a custom event when the song is replaced", function() {
+      var spy = jasmine.createSpy('change:currentSong');
+      model.on('change:currentSong', spy);
+      model.loadSong(song);
 
       expect(spy).toHaveBeenCalled();
     });
 
-    it("Can contain validation to ensure prospective song url is valid", function() {
-      var songs = new Songs([{ artist: "Dude", album: "Things", track: "Boner", url: "http://localhost/ace.mp3" }]);
-      var errorCallback = jasmine.createSpy('-error event callback');
+    // it("Can contain validation to ensure prospective song url is valid", function() {
+    //   var errorCallback = jasmine.createSpy('-error event callback');
       
-      player.on('invalid', errorCallback);
-      player.set({songs: songs, url: '12'}, {validate: true});
+    //   player.on('invalid', errorCallback);
+    //   player.modifyTrack({ url: '12'});
 
-      var errorArgs = errorCallback.mostRecentCall.args;
+    //   var errorArgs = errorCallback.mostRecentCall.args;
 
-      expect(errorArgs).toBeDefined();
-      expect(errorArgs[0]).toBe(player);
-      expect(errorArgs[1]).toBe('No song exists with that URL.');
-    });
+    //   expect(errorArgs).toBeDefined();
+    //   expect(errorArgs[0]).toBe(player);
+    //   expect(errorArgs[1]).toBe('No song exists with that URL.');
+    // });
 
   });
 
