@@ -24,14 +24,14 @@ define([
       expect( _.isFunction(model.set) ).toBe(true);
     });
 
-    it("Can be created with default values for its attributes", function() {
+    it("can be created with default values for its attributes", function() {
       expect(model.get('artist')).toBe('');
       expect(model.get('album')).toBe('');
       expect(model.get('track')).toBe('');
       expect(model.get('link')).toBe('');
     });
 
-    it("Will set passed attributes on the model instance when created", function() {
+    it("will set passed attributes on the model instance when created", function() {
       model = null;
       model = new Song({ 
         artist: "The Beatles", 
