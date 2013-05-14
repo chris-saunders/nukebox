@@ -6,10 +6,10 @@ define([
 	return Backbone.Model.extend({
 
 		defaults: {
-			"artist": "",
-			"album": "",
-			"track": "",
-			"url": ""
+			artist: "",
+			album: "",
+			track: "",
+			link: ""
 		},
 		
 		initialize: function() {

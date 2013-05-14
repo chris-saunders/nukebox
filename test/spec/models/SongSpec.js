@@ -2,32 +2,47 @@ define([
   "models/song"
 ], function(Song) {
 
-  describe("Model - Song", function() {
+  describe("Model_Song", function() {
 
-    var song;
+    var model;
 
     beforeEach(function() {
-      song = new Song();
+      model = new Song();
     });
 
     afterEach(function() {
-      song = null;
+      model = null;
     });
 
+    it("is defined", function() {
+      expect(model).not.toBeUndefined();
+    });
+
+    // Duck-typing, although I have my reservations
+    it("looks like a BB model", function() {
+      expect( _.isFunction(model.get) ).toBe(true);
+      expect( _.isFunction(model.set) ).toBe(true);
+    });
 
     it("Can be created with default values for its attributes", function() {
-      expect(song.get('artist')).toBe('');
-      expect(song.get('album')).toBe('');
-      expect(song.get('track')).toBe('');
-      expect(song.get('url')).toBe('');
+      expect(model.get('artist')).toBe('');
+      expect(model.get('album')).toBe('');
+      expect(model.get('track')).toBe('');
+      expect(model.get('link')).toBe('');
     });
 
     it("Will set passed attributes on the model instance when created", function() {
-      var newSong = new Song({ artist: "The Beatles", album: "Let it Be", track: "Let it Be", url: "08.Let%20it%20Be" });
-      expect(newSong.get('artist')).toBe("The Beatles");
-      expect(newSong.get('album')).toBe("Let it Be");
-      expect(newSong.get('track')).toBe("Let it Be");
-      expect(newSong.get('url')).toBe("08.Let%20it%20Be");
+      model = null;
+      model = new Song({ 
+        artist: "The Beatles", 
+        album: "Let it Be", 
+        track: "Let it Be", 
+        link: "08.Let%20it%20Be" 
+      });
+      expect(model.get('artist')).toBe("The Beatles");
+      expect(model.get('album')).toBe("Let it Be");
+      expect(model.get('track')).toBe("Let it Be");
+      expect(model.get('link')).toBe("08.Let%20it%20Be");
     });
     
   });

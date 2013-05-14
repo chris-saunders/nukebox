@@ -14,7 +14,7 @@ define([
         artist: "TestArtist", 
         album: "TestAlbum", 
         track: "TestTrack", 
-        url: "TestUrl" 
+        link: "TestLink" 
       });
     });
 
