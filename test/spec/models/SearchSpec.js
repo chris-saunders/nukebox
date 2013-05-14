@@ -35,12 +35,15 @@ define([
       expect(model.get('result')).toBe('');
     });
       
-    it("can search a model for a term", function() {
+    it("can search a model for a term and fires a change event", function() {
+      var spy = jasmine.createSpy('change:result');
       model = new Search({ haystack: haystack });
+      model.on('change:result', spy);
       model.search("bar");
       expect(model.get('result')[0].get('artist'))
         .toBe('bar');
       expect(model.get('result').length).toEqual(2);
+      expect(spy).toHaveBeenCalled();
     });
 
   });
