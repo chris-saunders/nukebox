@@ -14,9 +14,6 @@ define([
 		},
 
 		validate: function(attrs) {
-			if (attrs.hasOwnProperty('url') && !attrs.songs.findWhere({ url: attrs.url })) {
-				return "No song exists with that URL.";
-			}
 		},
 
 		loadSong: function(song) {
