@@ -2,51 +2,45 @@ define([
   "models/search"
 ], function(Search) {
 
-  describe("Model - Search", function() {
+  describe("Model_Search", function() {
+
+    var model,
+        haystack = new Backbone.Collection([
+          { artist: "foo" }, 
+          { artist: "bar" }, 
+          { artist: "bar" }
+        ]);
 
     beforeEach(function() {
-      this.model = new Search();
+      model = new Search();
     });
 
     afterEach(function() {
-      this.model = null;
+      model = null;
     });
 
-    describe("Setup", function() {
-
-      it("can be created with default values for its attributes", function() {
-        expect(this.model.get('needle')).toBe('');
-        expect(this.model.get('haystack')).toBe('');
-        expect(this.model.get('result')).toBe('');
-      });  
-    
+    it("is defined", function() {
+      expect(model).not.toBeUndefined();
     });
 
-    describe("Manipulation", function() {
+    // Duck-typing, although I have my reservations
+    it("looks like a BB model", function() {
+      expect( _.isFunction(model.get) ).toBe(true);
+      expect( _.isFunction(model.set) ).toBe(true);
+    });
 
-      beforeEach(function() {
-        var collection = new Backbone.Collection();
-        collection.add([{ artist: "foo" }, { artist: "bar" }, { artist: "bar" }]);
-        this.model.set({ haystack: collection });
-      });
+    it("can be created with default values for its attributes", function() {
+      expect(model.get('needle')).toBe('');
+      expect(model.get('haystack')).toBe('');
+      expect(model.get('result')).toBe('');
+    });
       
-      it("can search a model for a term", function() {
-        this.model.set({ needle: "bar" });
-        expect(this.model.get('result')[0].get('artist'))
-          .toBe('bar');
-      });
-
-      it("can search a model for a term and receive an array of results", function() {
-        this.model.set({ needle: "bar" });
-        expect(this.model.get('result').length)
-          .toBeGreaterThan(0);
-      });
-
-      it("can return a search result", function() {
-        this.model.set({ needle: "bar" });
-        expect(this.model.get('result').length).toEqual(2);
-      });
-    
+    it("can search a model for a term", function() {
+      model = new Search({ haystack: haystack });
+      model.search("bar");
+      expect(model.get('result')[0].get('artist'))
+        .toBe('bar');
+      expect(model.get('result').length).toEqual(2);
     });
 
   });
